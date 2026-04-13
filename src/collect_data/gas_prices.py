@@ -6,8 +6,11 @@ from datetime import datetime
 from src.common_func.config import TTF_GAS_TICKER, LOG_DIR
 
 def log_event(event_type: str, status: str, metadata: dict):
-    """Appends execution logs to a JSONL file."""
+    """Appends execution logs to a JSONL file, creating directories if needed."""
     log_path = os.path.join(LOG_DIR, "collection_audit.jsonl")
+    
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    
     log_entry = {
         "timestamp": datetime.now().isoformat(),
         "event": event_type,

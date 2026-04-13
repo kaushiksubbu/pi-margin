@@ -6,10 +6,17 @@ data/
 # Environment and Secrets
 .env
 __pycache__/
+venv/
 .venv/
+env/
+*.env
 
 # Prefect & dbt logs
 .prefect/
 logs/
 target/
 dbt_modules/
+
+# folders
+src/tests/
+src/temp_and_scratch/
