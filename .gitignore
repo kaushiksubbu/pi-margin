@@ -18,5 +18,5 @@ target/
 dbt_modules/
 
 # folders
-src/tests/
 src/temp_and_scratch/
+tests/
