@@ -40,3 +40,37 @@ Use Pydantic's extra='allow' combined with a dedicated metadata JSON column in D
 
 Rationale
 Market APIs frequently add new fields (e.g., vix_index, trade_status). Instead of crashing the pipeline or ignoring the data, we "quarantine" these unknown fields into a JSON bucket. This keeps the Bronze Layer stable while preserving 100% of the incoming data for future AI discovery.
+
+Since we are using OpenLineage via FileTransport, your Lineage ADR needs to specify how we capture the "story" of a data point without a central server. This ADR ensures that every byte in your DuckDB can be traced back to its raw JSON source.
+
+# ADR-003: Traceable Lineage via Metadata Injection
+Date: 2026-04-14
+
+Status: Accepted 
+Context
+As data moves from the internet to the Gold layer, we need a way to debug "Bad Data" and perform audit trails. If a margin calculation looks wrong, we must be able to prove if the error was in the source API, the Pydantic validation, or the SQL transformation. Standard logging (JSONL) is useful for errors but lacks the "Dataset-to-Dataset" relationship needed for true observability.
+
+Decision
+We will implement OpenLineage-compliant metadata injection using a two-pronged approach:
+
+Local Metadata Injection (The "Passport"): Every row inserted into DuckDB will include a lineage_id or source_file reference.
+
+OpenLineage Events (The "Flight Recorder"): We will use the openlineage-python library configured with FileTransport to emit JSON events to logs/openlineage_events.jsonl.
+
+Technical Implementation
+No JVM: We explicitly reject the use of a Marquez/JVM server to save RPi resources.
+
+File-Based: All lineage events are appended to a local .jsonl file.
+
+Dataset Naming: * Inputs: yfinance://TTF=F or file://data/landing_zone/ttf_gas_YYYYMMDD.jsonl
+
+Outputs: file://data/landing_zone/... or duckdb://raw_source.db/gas_prices_raw
+
+Consequences
+Positive: High Observability. We can use DuckDB to query our own lineage logs to see how long jobs took and how many rows were moved.
+
+Positive: Audit Ready. Meets institutional standards for data provenance.
+
+Negative: Manual Instrumentation. We must manually add "Start" and "Complete" emitters to our Python functions (this will be done in tomorrow's session).
+
+Negative: Log Rotation. The openlineage_events.jsonl will grow over time and will eventually need a cleanup strategy.
