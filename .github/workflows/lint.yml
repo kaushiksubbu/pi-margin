@@ -18,9 +18,8 @@ jobs:
 
       - name: autopep8 fix
         run: |
-          autopep8 --in-place --aggressive --aggressive \
-            --global-config .flake8 \
-            -r src/
+          # Use find to ensure we are targeting the right files regardless of shell quirks
+          find src/ -name "*.py" | xargs autopep8 --in-place --aggressive --aggressive
 
       - name: flake8 check
         run: flake8 src/
