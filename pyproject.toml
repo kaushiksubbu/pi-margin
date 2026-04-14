@@ -1,0 +1,11 @@
+[tool.autopep8]
+max_line_length = 100
+aggressive = 2
+recursive = true
+in_place = true
+
+[tool.flake8]
+# Note: flake8 doesn't natively support pyproject.toml yet 
+# without a plugin (flake8-pyproject) .flake8
+max-line-length = 100
+extend-ignore = "E501"
