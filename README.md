@@ -44,7 +44,7 @@ The system combines structured data, unstructured market intelligence, and scena
     Ensures the system provides defensible, audit‑ready decision support.
 
 # 4. Data Strategy — The Golden Record
-The Margin Sentinel uses curated, real‑world proxy datasets to ensure analytical credibility. No synthetic or placeholder data is used.
+The Margin Sentinel uses curated, real‑world datasets to ensure analytical credibility. No synthetic or placeholder data is used.
   4.1 External Energy Drivers
     Purpose: Provide the model with realistic volatility patterns.
   4.2 Retail Price Indices
