@@ -19,7 +19,7 @@ jobs:
       - name: autopep8 fix
         run: |
           # Use find to ensure we are targeting the right files regardless of shell quirks
-          find src/ -name "*.py" | xargs autopep8 --in-place --aggressive --aggressive
+          find src/ -type f -name "*.py" -not -xtype l | xargs autopep8 --in-place --aggressive --aggressive
 
       - name: flake8 check
         run: flake8 src/
