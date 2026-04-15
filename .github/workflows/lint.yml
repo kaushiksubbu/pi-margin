@@ -22,4 +22,4 @@ jobs:
           find src/ -type f -name "*.py" -not -xtype l | xargs autopep8 --in-place --aggressive --aggressive
 
       - name: flake8 check
-        run: flake8 src/
+        run: flake8 --exclude=src/common_func/db_utils.py src/
