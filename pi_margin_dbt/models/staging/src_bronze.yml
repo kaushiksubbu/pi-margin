@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: raw_source
+    schema: main  # DuckDB default schema
+    # 'database' name dbt profiles.yml
+    tables:
+      - name: gas_prices_raw
+        description: "Raw ingested gas price data from the landing zone."
+        columns:
+          - name: symbol
+            description: "Ticker symbol for the commodity"
+          - name: timestamp
+            description: "Extraction timestamp"

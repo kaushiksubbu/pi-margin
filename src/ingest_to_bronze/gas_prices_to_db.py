@@ -73,13 +73,23 @@ def run_ingestion():
                         try:
                             con.execute("""
                                 INSERT INTO target_bronze.gas_prices_raw 
-                                SELECT ? as symbol, ? as close_price, ? as volume, ? as timestamp, ? as metadata
+                                (
+                                    symbol, open_price, high_price, low_price, close_price,
+                                    volume, date
+                                )
+                                SELECT ? as symbol, ? as open_price, ? as high_price,? as low_price,? as close_price, ? as volume, ? as date
                                 WHERE NOT EXISTS (
                                     SELECT 1 FROM target_bronze.gas_prices_raw 
-                                    WHERE symbol = ? AND timestamp = ?
+                                    WHERE symbol = ? AND date = ?
                                 )
-                            """, (record.commodity, record.Close, record.Volume, record.timestamp, 
-                                  json.dumps(extra_fields), record.commodity, record.timestamp))
+                            """, ( record.commodity,
+                                record.Open,
+                                record.High,
+                                record.Low,
+                                record.Close,
+                                record.Volume,
+                                record.timestamp
+                                ,record.commodity, record.timestamp))
                         finally:
                             con.execute("DETACH target_bronze")
                         

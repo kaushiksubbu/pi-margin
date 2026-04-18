@@ -6,6 +6,9 @@ class GasPriceRecord(BaseModel):
     model_config = ConfigDict(extra='allow') # Keeps extra fields for additive drift detection
     timestamp: datetime
     commodity: str = Field(..., pattern=r"^[A-Z_]+$")
+    Open: float = Field(..., gt=0)
+    High: float = Field(..., gt=0)
+    Low: float = Field(..., gt=0)
     Close: float = Field(..., gt=0)
     Volume: float = Field(..., ge=0)
     currency: str = Field(default="EUR", min_length=3, max_length=3)

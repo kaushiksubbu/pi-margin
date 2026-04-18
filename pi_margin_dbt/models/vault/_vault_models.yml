@@ -1,0 +1,14 @@
+version: 2
+
+models:
+  - name: hub_commodity
+    config:
+      materialized: external
+      location: "/home/kaushik/pi-margin/data/silver/hub_commodity.parquet"
+      format: parquet
+
+  - name: sat_commodity_prices
+    config:
+      materialized: external
+      location: "/home/kaushik/pi-margin/data/silver/sat_commodity_prices.parquet"
+      format: parquet

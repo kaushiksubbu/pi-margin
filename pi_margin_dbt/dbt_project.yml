@@ -1,0 +1,26 @@
+name: 'pi_margin_dbt'
+version: '1.0.0'
+config-version: 2
+
+# This MUST match the entry added to ~/.dbt/profiles.yml
+profile: 'pi_margin_dbt' 
+
+model-paths: ["models"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  pi_margin_dbt:
+    # Applying the hook to the entire project
+    +pre-hook:
+      - "ATTACH IF NOT EXISTS '/home/kaushik/pi-margin/data/databases/raw_source.db' AS bronze"
+      - "ATTACH IF NOT EXISTS '/home/kaushik/pi-margin/data/databases/master_data.db' AS silver"
+    
+    # Specific configurations for folders
+    staging:
+      +materialized: view
+    vault:
+      +materialized: view # Or 'external' if you are using that plugin
+    gold:
+      +materialized: view
