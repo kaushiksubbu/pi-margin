@@ -6,6 +6,17 @@ models:
       materialized: external
       location: "/home/kaushik/pi-margin/data/silver/hub_commodity.parquet"
       format: parquet
+    columns:
+      - name: hub_commodity_key
+        tests:
+          - unique
+          - not_null
+  - name: commodity_id
+    tests:
+      - not_null
+      - relationships:
+          to: ref('stg_gas_prices')
+          field: symbol
 
   - name: sat_commodity_prices
     config:

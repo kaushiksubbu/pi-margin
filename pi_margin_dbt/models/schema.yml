@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: stg_gas_prices
+    columns:
+      - name: close_price
+        tests:
+          - not_null
+#          - dbt_utils.accepted_range:
+#              min_value: 0  # Prices can't be negative
+      - name: symbol
+        tests:
+          - not_null
