@@ -5,7 +5,7 @@ import os
 import logging
 from datetime import datetime
 from sentence_transformers import SentenceTransformer
-from src.common_func.config import  LOG_DIR
+from src.common_func.config import LOG_DIR
 
 # Configure standard logging to JSONL (matches your collection pattern)
 logging.basicConfig(
@@ -38,7 +38,7 @@ def ingest_to_chroma():
 
         # 3. Load Embedding Model
         # Using the Librarian model
-        model = SentenceTransformer('all-MiniLM-L6-v2')
+        # model = SentenceTransformer('all-MiniLM-L6-v2')
 
         # 4. Setup ChromaDB
         client = chromadb.PersistentClient(path="./chroma_db")
