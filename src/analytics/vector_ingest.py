@@ -4,7 +4,7 @@ import json
 import os
 import logging
 from datetime import datetime
-from sentence_transformers import SentenceTransformer
+#from sentence_transformers import SentenceTransformer
 from src.common_func.config import LOG_DIR
 
 # Configure standard logging to JSONL (matches your collection pattern)
