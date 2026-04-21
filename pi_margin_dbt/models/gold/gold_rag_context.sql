@@ -1,4 +1,7 @@
-{{ config(materialized='view') }}
+{{ config(
+    materialized='table',
+    alias='gold_rag_context'
+) }}
 
 SELECT 
     commodity_id,
