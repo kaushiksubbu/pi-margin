@@ -5,7 +5,7 @@ import os
 import logging
 from datetime import datetime
 from sentence_transformers import SentenceTransformer
-from src.common_func.config import LANDING_ZONE, LOG_DIR
+from src.common_func.config import  LOG_DIR
 
 # Configure standard logging to JSONL (matches your collection pattern)
 logging.basicConfig(
@@ -27,7 +27,7 @@ def ingest_to_chroma():
         # 1. Initialize DB Connection
         # Replicating your manual fix: Attach master_data as silver
         con = duckdb.connect('/home/kaushik/pi-margin/data/databases/analytics.db')
-        con.execute(f"ATTACH '/home/kaushik/pi-margin/data/databases/master_data.db' AS silver;")
+        con.execute("ATTACH '/home/kaushik/pi-margin/data/databases/master_data.db' AS silver;")
 
         # 2. Fetch Gold Data
         df = con.execute("SELECT chunk_text, commodity_id FROM gold_rag_context").fetchdf()
@@ -66,7 +66,7 @@ def ingest_to_chroma():
 
     except Exception as e:
         log_to_jsonl("ERROR", "ingest", {"status": "failed", "error": str(e)})
-        print(f"Ingestion failed. Check logs.")
+        print("Ingestion failed. Check logs.")
 
 if __name__ == "__main__":
     ingest_to_chroma()

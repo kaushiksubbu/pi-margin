@@ -4,7 +4,9 @@ import os
 import json
 import logging
 from datetime import datetime
-from src.common_func.config import OPS_DB, SILVER_DB, LOG_DIR, BRONZE_DB
+from src.common_func.config import OPS_DB, SILVER_DB, LOG_DIR
+
+logger = logging.getLogger(__name__)
 
 # --- 1. LOGGING CONFIG ---
 logging.basicConfig(
@@ -46,7 +48,7 @@ def run_vault_update():
         result = subprocess.run(["dbt", "run"], cwd=dbt_project_path,capture_output=True, text=True, check=True)
         log_to_jsonl("INFO", "silver_handoff", {"event": "dbt_run_complete", "run_id": run_id})
         if result.returncode != 0:
-                # This will put the ACTUAL dbt error into your logs
+                # This will put the ACTUAL dbt error into logs
                 logger.error({"event": "failed", "error": result.stderr or result.stdout})
         else:
                 # Proceed to move parquet to silver

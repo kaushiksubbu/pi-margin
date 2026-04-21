@@ -13,7 +13,7 @@ def initialize_vault():
     # Connecting to a file that doesn't exist creates it automatically
     con_s = duckdb.connect(SILVER_PATH)
     con_g = duckdb.connect(GOLD_PATH) 
-    con_b= duckdb.connect(BRONZE_PATH)
+    # con_b= duckdb.connect(BRONZE_PATH)
     
     try:
 
